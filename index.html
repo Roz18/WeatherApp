@@ -47,6 +47,7 @@
         >
           Haarlem, NL
         </h1>
+        <h2 id="curentTemp">12°C☔</h2>
         <div class="collapse" id="searchForm">
           <form id="cityForm">
             <div class="form-group">
@@ -58,12 +59,17 @@
                 placeholder="Enter city"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="margin: 8px; margin-left: 0.8px"
+            >
+              Search
+            </button>
           </form>
         </div>
       </div>
 
-      <h2 id="curentTemp">12°C☔</h2>
       <div class="container">
         <div class="row" style="margin-left: -5px; margin-right: -5px">
           <div class="col">
@@ -83,61 +89,60 @@
             <div class="weatherdetails">
               <div class="card" style="width: 100%">
                 <div class="card-body">
-                  <p class="card-text">Precipitation: 3%</p>
-                  <p>Humidity: 63%</p>
-                  <p>Wind: 23 km/h</p>
+                  <p class="card-text" id="preci">Precipitation: 3%</p>
+                  <p id="humi">Humidity: 63%</p>
+                  <p id="win">Wind: 23 km/h</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Space holder -->
-      <canvas
-        data-mdb-chart="line"
-        data-mdb-labels="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"
-        data-mdb-dataset-data="[2112, 2343, 2545, 3423, 2365, 1985, 987]"
-      ></canvas>
-      <!-- Space holder until you make it work -->
+
       <div class="TemperatureBox text-center">
         <div
           class="card"
-          style="width: 100%; margin: 0 auto; margin-bottom: 20px"
+          style="
+            width: 94%;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            margin-top: 20px;
+          "
         >
           <div class="card-body">
             <h3 class="card-title">Temperature</h3>
             <div class="card-text">
-              <table class="table table-striped table-hover">
+              <table class="table table-hover">
                 <tbody>
-                  <tr>
-                    <td>Wednesday</td>
-                    <td>11°C/13°C</td>
-                    <td>☁️</td>
+                  <tr class="dayForecastOne">
+                    <td id="dayOne">Wednesday</td>
+                    <td id="tempOne">11°C/13°C</td>
+                    <td id="emogiOne">☁️</td>
                   </tr>
-                  <tr>
-                    <td>Thursday</td>
-                    <td>9°C/11°C</td>
-                    <td>🌧️</td>
+                  <tr class="dayForecastTwo">
+                    <td id="dayTwo">Thursday</td>
+                    <td id="tempTwo">9°C/11°C</td>
+                    <td id="emogiTwo">🌧️</td>
                   </tr>
-                  <tr>
-                    <td>Friday</td>
-                    <td>14°C/19°C</td>
-                    <td>🌥️</td>
+                  <tr class="dayForecastThree">
+                    <td id="dayThree">Friday</td>
+                    <td id="tempThree">14°C/19°C</td>
+                    <td id="emogiThree">🌥️</td>
                   </tr>
-                  <tr>
-                    <td>Saturday</td>
-                    <td>15°C/25°C</td>
-                    <td>☀️</td>
+                  <tr class="dayForecastFour">
+                    <td id="dayFour">Saturday</td>
+                    <td id="tempFour">15°C/25°C</td>
+                    <td id="emogiFour">☀️</td>
                   </tr>
-                  <tr>
-                    <td>Sunday</td>
-                    <td>12°C/20°C</td>
-                    <td>🌩️</td>
+                  <tr class="dayForecastFive">
+                    <td id="dayFive">Sunday</td>
+                    <td id="tempFive">12°C/20°C</td>
+                    <td id="emogiFive">🌩️</td>
                   </tr>
-                  <tr>
-                    <td>Monday</td>
-                    <td>15°C/23°C</td>
-                    <td>☀️</td>
+                  <tr class="dayForecastSix">
+                    <td id="daySix">Monday</td>
+                    <td id="tempSix">15°C/23°C</td>
+                    <td id="emogiSix">☀️</td>
                   </tr>
                 </tbody>
               </table>
