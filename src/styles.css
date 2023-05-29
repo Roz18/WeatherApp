@@ -19,3 +19,12 @@ h2 {
 h4 {
   text-align: center;
 }
+.weather-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-container #curentTemp {
+  margin-right: 10px;
+}

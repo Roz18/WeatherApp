@@ -47,7 +47,10 @@
         >
           Haarlem, NL
         </h1>
-        <h2 id="curentTemp">12°C☔</h2>
+        <div class="weather-container">
+          <h2 id="curentTemp">12°C</h2>
+          <p id="icon">icon</p>
+        </div>
         <div class="collapse" id="searchForm">
           <form id="cityForm">
             <div class="form-group">
@@ -89,7 +92,7 @@
             <div class="weatherdetails">
               <div class="card" style="width: 100%">
                 <div class="card-body">
-                  <p class="card-text" id="preci">Precipitation: 3%</p>
+                  <p class="card-text" id="description">Description</p>
                   <p id="humi">Humidity: 63%</p>
                   <p id="win">Wind: 23 km/h</p>
                 </div>
@@ -112,37 +115,42 @@
           <div class="card-body">
             <h3 class="card-title">Temperature</h3>
             <div class="card-text">
-              <table class="table table-hover">
+              <table class="table table-hover" id="dayForecats">
                 <tbody>
-                  <tr class="dayForecastOne">
-                    <td id="dayOne">Wednesday</td>
-                    <td id="tempOne">11°C/13°C</td>
-                    <td id="emogiOne">☁️</td>
+                  <tr id="dayOne">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
                   </tr>
-                  <tr class="dayForecastTwo">
-                    <td id="dayTwo">Thursday</td>
-                    <td id="tempTwo">9°C/11°C</td>
-                    <td id="emogiTwo">🌧️</td>
+                  <tr id="dayTow">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
                   </tr>
-                  <tr class="dayForecastThree">
-                    <td id="dayThree">Friday</td>
-                    <td id="tempThree">14°C/19°C</td>
-                    <td id="emogiThree">🌥️</td>
+                  <tr id="dayThree">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
                   </tr>
-                  <tr class="dayForecastFour">
-                    <td id="dayFour">Saturday</td>
-                    <td id="tempFour">15°C/25°C</td>
-                    <td id="emogiFour">☀️</td>
+                  <tr id="dayFour">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
                   </tr>
-                  <tr class="dayForecastFive">
-                    <td id="dayFive">Sunday</td>
-                    <td id="tempFive">12°C/20°C</td>
-                    <td id="emogiFive">🌩️</td>
+                  <tr id="dayFive">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
                   </tr>
-                  <tr class="dayForecastSix">
-                    <td id="daySix">Monday</td>
-                    <td id="tempSix">15°C/23°C</td>
-                    <td id="emogiSix">☀️</td>
+                  <tr id="daySix">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
+                  </tr>
+                  <tr id="daySeven">
+                    <td class="day"></td>
+                    <td class="temp"></td>
+                    <td class="emoji"></td>
                   </tr>
                 </tbody>
               </table>
