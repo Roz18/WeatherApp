@@ -47,9 +47,15 @@
         >
           Haarlem, NL
         </h1>
-        <div class="weather-container">
-          <h2 id="curentTemp">12°C</h2>
-          <p id="icon">icon</p>
+        <div class="weatherContainer">
+          <h2 id="curentTemp">°C</h2>
+          <p>
+            <img
+              scr="http:ssl.gstatic.com/onebox/weather/64sunny.png"
+              alt="clear"
+              id="icon"
+            />
+          </p>
         </div>
         <div class="collapse" id="searchForm">
           <form id="cityForm">
@@ -80,9 +86,9 @@
               <div class="g-col-6">
                 <div class="card" style="width: 100%">
                   <div class="card-body">
-                    <p id="weekdayDetails">Tuesday 9:00</p>
-                    <p id="description">Mostly sunny</p>
-                    <p id="LowHigh">Today 10°C/15°C</p>
+                    <p id="timeNow">12:00</p>
+                    <p id="dayNow">Tuesday</p>
+                    <p id="lowHigh">Today 00°C/00°C</p>
                   </div>
                 </div>
               </div>
@@ -93,8 +99,8 @@
               <div class="card" style="width: 100%">
                 <div class="card-body">
                   <p class="card-text" id="description">Description</p>
-                  <p id="humi">Humidity: 63%</p>
-                  <p id="win">Wind: 23 km/h</p>
+                  <p id="humidity">Humidity: 63%</p>
+                  <p id="wind">Wind: 23 km/h</p>
                 </div>
               </div>
             </div>

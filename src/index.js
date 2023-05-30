@@ -12,9 +12,10 @@ $(document).ready(function () {
       .get(url)
       .then(function (response) {
         let temperature = Math.round(response.data.main.temp);
-        console.log("Temperature:", temperature);
+        console.log("#curentTemp:", temperature);
 
         $("#curentTemp").text(`${temperature}°C`);
+        getCurrentCity(response);
         sevenDayForecast(city);
       })
       .catch(function (error) {
@@ -33,29 +34,38 @@ $(document).ready(function () {
 
     cityHeadingElemen.innerHTML = city;
   }
-
-  function getCurrentCity() {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      let latitude = position.coords.latitude;
-      let longitude = position.coords.longitude;
-      let key = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
-      let url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}&units=metric`;
-
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          searchCity(data);
-          let temperature = Math.round(data.main.temp);
-          console.log("Temperature:", temperature);
-          $("#curentTemp").text(`${temperature}°C`);
-        })
-        .catch((error) => {
-          console.log("Error:", error);
-        });
-    });
+  function getForecast(coordinates) {
+    let apiKey = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric&`;
+    axios.get(apiUrl).then(displayForecast);
   }
 
-  getCurrentCity();
+  function getCurrentCity(response) {
+    let lowHighElement = document.querySelector("#lowHigh");
+    let cityElement = document.querySelector("#cityHeading");
+    let descriptionElement = document.querySelector("#description");
+    let humidityElement = document.querySelector("#humidity");
+    let windElement = document.querySelector("#wind");
+    let iconElement = document.querySelector("#icon");
+
+    let lowTemperature = Math.round(response.data.main.temp_min);
+    let highTemperature = Math.round(response.data.main.temp_max);
+    lowHighElement.innerHTML = `Today ${lowTemperature}°C/${highTemperature}°C`;
+
+    cityElement.innerHTML = response.data.name;
+    descriptionElement.innerHTML = response.data.weather[0].description;
+    humidityElement.innerHTML =
+      "Humidity:  " + response.data.main.humidity + "%";
+    windElement.innerHTML =
+      "Wind Speed:  " + Math.round(response.data.wind.speed * 3.6) + "km/h";
+    iconElement.setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`
+    );
+    iconElement.setAttribute("alt", response.data.weather[0].description);
+
+    getCurrentCity(response.data.coord);
+  }
 
   function getWeekday() {
     let days = [
@@ -68,8 +78,8 @@ $(document).ready(function () {
       "Saturday",
     ];
     let now = new Date();
-    let weekday = days[now.getDay()];
-    return weekday;
+    let dayNow = days[now.getDay()];
+    return dayNow;
   }
 
   function getTime() {
@@ -80,9 +90,10 @@ $(document).ready(function () {
   }
 
   function updateDateTime() {
-    let weekday = getWeekday();
-    let time = getTime();
-    $("#weekdayDetails").text(`${weekday} ${time}`);
+    let dayNow = getWeekday();
+    let timeNow = getTime();
+    $("#dayNow").text(`${dayNow}`);
+    $("#timeNow").text(`${timeNow}`);
   }
 
   updateDateTime();
@@ -92,7 +103,7 @@ $(document).ready(function () {
 
 function sevenDayForecast(city) {
   let cnt = 7;
-  let key = "32ecda5bta3bd6bc964176affb080o6a";
+  let key = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
   let url = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=${cnt}&appid=${key}`;
 
   fetch(url)
