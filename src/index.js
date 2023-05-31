@@ -16,7 +16,6 @@ $(document).ready(function () {
 
         $("#currentTemp").text(`${temperature}°C`);
         getSearchCity(response);
-        getForecast(response.data.coord);
       })
       .catch(function (error) {
         console.log("Error:", error);
@@ -73,7 +72,7 @@ $(document).ready(function () {
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
     axios
       .get(apiUrl)
-      .then(displayForecast)
+      .then(getForecast)
       .catch(function (error) {
         console.log("Error:", error);
       });
@@ -118,10 +117,6 @@ $(document).ready(function () {
     }
   }
 
-  function displayForecast(response) {
-    // Implement your logic to display the forecast data here
-  }
-
   function getWeekday() {
     let days = [
       "Sunday",
@@ -155,7 +150,7 @@ $(document).ready(function () {
 
   setInterval(updateDateTime, 1000);
 });
-
+//still working on it//
 function sevenDayForecast(city) {
   let cnt = 7;
   let key = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
@@ -213,3 +208,4 @@ function getWeekday(timestamp) {
 }
 
 function getEmoji(weatherCode) {}
+// stil woking on//

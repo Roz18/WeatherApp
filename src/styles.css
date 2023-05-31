@@ -4,11 +4,16 @@ body {
 h1 {
   text-align: center;
   padding: 25px;
+  font-weight: 500;
 }
 h2 {
   font-size: xx-large;
   text-align: center;
 }
+h4 {
+  font-size: small;
+}
+
 .custom-link {
   color: inherit;
   text-decoration: none;
