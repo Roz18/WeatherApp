@@ -9,7 +9,7 @@ $(document).ready(function () {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
 
     axios.get(url).then(function (response) {
-      let temperature = Math.round(forecast.main.temp);
+      let temperature = Math.round(response.data.main.temp);
       console.log("#currentTemp:", temperature);
 
       $("#currentTemp").text(`${temperature}°C`);
