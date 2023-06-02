@@ -8,19 +8,13 @@ $(document).ready(function () {
     let key = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
 
-    axios
-      .get(url)
-      .then(function (response) {
-        let temperature = Math.round(response.data.main.temp);
-        console.log("#currentTemp:", temperature);
+    axios.get(url).then(function (response) {
+      let temperature = Math.round(forecast.main.temp);
+      console.log("#currentTemp:", temperature);
 
-        $("#currentTemp").text(`${temperature}°C`);
-        getSearchCity(response);
-        getWeatherForecast(city);
-      })
-      .catch(function (error) {
-        console.log("Error:", error);
-      });
+      $("#currentTemp").text(`${temperature}°C`);
+      getSearchCity(response);
+    });
   });
 });
 
@@ -42,8 +36,8 @@ function getCurrentLocation() {
       function (position) {
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
-        let apiKey = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
-        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+        let key = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
+        let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
 
         axios
           .get(url)
@@ -68,10 +62,6 @@ function getCurrentLocation() {
 
 getCurrentLocation();
 
-function getForcats(coordinates) {
-  console.log(coordinates);
-}
-
 function getSearchCity(response) {
   let lowHighElement = document.querySelector("#lowHigh");
   let temperatureElement = document.querySelector("#currentTemp");
@@ -92,18 +82,21 @@ function getSearchCity(response) {
     descriptionElement.innerHTML = response.data.weather[0].description;
     humidityElement.innerHTML =
       "Humidity: " + response.data.main.humidity + "%";
-    windElement.innerHTML =
-      "Wind speed: " + Math.round(response.data.wind.speed * 3.6) + "km/h";
+    windElement.innerHTML = `Wind speed: ${Math.round(
+      response.data.wind.speed * 3.6
+    )}km/h`;
     iconElement.setAttribute(
       "src",
       `http://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`
     );
     iconElement.setAttribute("alt", response.data.weather[0].description);
-    getForcats(response.data.coord);
+    getForecasts(response.data.coord);
+    return response.data.id;
   }
+  return null;
 }
 
-function getWeekday() {
+function Weekday(dt) {
   let days = [
     "Sunday",
     "Monday",
@@ -113,9 +106,16 @@ function getWeekday() {
     "Friday",
     "Saturday",
   ];
-  let now = new Date();
-  let dayNow = days[now.getDay()];
+  let date = new Date(dt * 1000);
+  let dayNow = days[date.getDay()];
   return dayNow;
+}
+
+function updateDateTime() {
+  let dayNow = Weekday(Date.now() / 1000);
+  let timeNow = getTime();
+  $("#dayNow").text(`${dayNow}`);
+  $("#timeNow").text(`${timeNow}`);
 }
 
 function getTime() {
@@ -125,68 +125,46 @@ function getTime() {
   return `${hours}:${minutes}`;
 }
 
-function updateDateTime() {
-  let dayNow = getWeekday();
-  let timeNow = getTime();
-  $("#dayNow").text(`${dayNow}`);
-  $("#timeNow").text(`${timeNow}`);
-}
-
 updateDateTime();
+setInterval(updateDateTime, 1000);
 
-setInterval(updateDateTime);
-function getWeatherForecast(city) {
-  let key = "f9b7c5ede19bfdb8a31cd3fd5868d6fe";
-  let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=metric`;
+function getForecasts(coordinates) {
+  let key = "e450bc345a80a08ada69fd5c714d871d";
+  let lat = coordinates.lat;
+  let lon = coordinates.lon;
+  let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${key}&units=metric`;
 
-  axios
-    .get(url)
-    .then(function (response) {
-      let forecastData = response.data.list.slice(0, 7).map((item) => {
-        return {
-          day: getWeekday(item.dt),
-          temp: Math.round(item.main.temp),
-          emoji: item.weather[0].icon,
-        };
-      });
-
-      updateWeatherForecast(forecastData);
-    })
-    .catch((error) => {
-      console.log("Error:", error);
-    });
+  axios.get(url).then(function (response) {
+    let forecasts = response.data.daily.slice(1, 8);
+    updateForecastTable(forecasts);
+  });
 }
 
-function updateWeatherForecast(forecastData) {
-  let forecastElements = document.querySelectorAll("#dayForecats .day");
-  let tempElements = document.querySelectorAll("#dayForecats .temp");
-  let emojiElements = document.querySelectorAll("#dayForecats .emoji");
+function updateForecastTable(forecasts) {
+  let forecastElement = document.querySelector("#dayForecast");
 
-  for (let i = 0; i < forecastData.length; i++) {
-    let weather = forecastData[i];
-    let forecastElement = forecastElements[i];
-    let tempElement = tempElements[i];
-    let emojiElement = emojiElements[i];
+  if (forecastElement) {
+    let forecastHTML = `<tbody>`;
+    forecasts.forEach(function (forecastDay) {
+      let day = Weekday(forecastDay.dt);
+      let minTemperature = Math.round(forecastDay.temp.min);
+      let maxTemperature = Math.round(forecastDay.temp.max);
+      let icon = forecastDay.weather[0].icon;
 
-    forecastElement.textContent = weather.day;
-    tempElement.textContent = weather.temp;
-    emojiElement.innerHTML = `<img src="http://openweathermap.org/img/wn/${weather.emoji}.png">`;
+      forecastHTML += `
+        <tr>
+          <td class="day">${day}</td>
+          <td class="temp">${minTemperature}°C/${maxTemperature}°C</td>
+          <td class="emoji">
+            <img src="http://openweathermap.org/img/wn/${icon}.png">
+          </td>
+        </tr>
+      `;
+    });
+
+    forecastHTML += `</tbody>`;
+    forecastElement.innerHTML = forecastHTML;
+  } else {
+    console.log("Forecast element not found in the DOM");
   }
 }
-
-function getWeekday(dt) {
-  let date = new Date(dt * 1000);
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  let dayIndex = date.getDay();
-  return days[dayIndex];
-}
-
-// -- vanila weathe w7 06'51--//
