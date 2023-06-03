@@ -12,7 +12,7 @@ h2 {
   font-size: xx-large;
   text-align: center;
   font-family: "ABeeZee", sans-serif;
-  text-shadow: #fcf8cf 1px 0 10px;
+  text-shadow: rgb(128, 200, 180) 1px 0 10px;
 }
 
 h4 {
@@ -22,7 +22,7 @@ h4 {
 .custom-link {
   color: inherit;
   text-decoration: none;
-  text-shadow: #fcf8cf 1px 0 10px;
+  text-shadow: rgb(128, 200, 180) 1px 0 10px;
 }
 .custom-link:hover {
   text-decoration: none;
